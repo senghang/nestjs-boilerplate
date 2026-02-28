@@ -1,19 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+import { AuditEntity } from '../../common/audit/audit.entity';
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ unique: true })
+@Entity('users')
+export class User extends AuditEntity {
+  @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 255, unique: true, nullable: true })
+  username?: string;
+
+  @Column({ type: 'varchar', length: 255 })
   password: string;
 
-  @Column({ default: 'USER' })
-  role: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  description?: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ name: 'is_admin', type: 'boolean', default: false })
+  isAdmin: boolean;
 }
